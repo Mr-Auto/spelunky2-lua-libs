@@ -63,6 +63,8 @@ You can also expand the variables with custom ones without editing any of the `m
 
 This is single player only (obviously) and uses only the player 1 controls for the menu, it is not affected by opening a game menu, in game death etc. any of this logic needs to be made by you
 
+The draw_rect functions have a bug with the rounding argument, the fix is on the way. 
+
 ### Examples:
 
 1. Fastest way to make a simple menu
