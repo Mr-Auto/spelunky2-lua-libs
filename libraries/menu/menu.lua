@@ -18,7 +18,7 @@ Menu = {
       padding = AABB:new(0.02, 0.02, 0.02, 0.02),
       rounding = 0.0,
     },
-    callback_idx = nil,
+    callback_id = nil,
     
     items = {
       names = {},
@@ -30,7 +30,7 @@ Menu = {
       },
       font_size = 20,
       text_align = TEXT_ALIGNMENT.CENTER,
-      spacing= 0.03,     -- space between the "buttons"
+      spacing = 0.03,     -- space between the "buttons"
       padding = AABB:new(),
       size = {0.0, 0.0}, -- horizontal, vertical, zero means automatic
       height = 0.0,      -- internal use only
@@ -52,12 +52,18 @@ function Menu:new (o)
 end
 
 function Menu:set_callback(func)
+    if self.callback_id ~= nil then
+        self:clear_callback()
+    end
     table.insert(menu_callbacks, {func, self})
-    return #menu_callbacks - 1
+    self.callback_id = #menu_callbacks
 end
 
-function Menu:clear_callback(funcid)
-    menu_callbacks[funcid] = nil
+function Menu:clear_callback()
+    if self.callback_id ~= nil then
+        menu_callbacks[self.callback_id] = nil
+        self.callback_id = nil
+    end
 end
 
 function Menu:center (v, h)
@@ -156,7 +162,7 @@ set_callback(function()
 
     new_inputs = state.player_inputs.player_slots[1].buttons
     for idx, v in pairs(menu_callbacks) do
-        if math.abs(v[2].last_draw_frame - get_frame()) <= 1 then
+        if v[2].last_draw_frame == nil or math.abs(v[2].last_draw_frame - get_frame()) <= 1 then
         
             test_inputs = (new_inputs ~ (new_inputs & last_inputs))
             if test_inputs & v[2].key_binds.up ~= 0 then
