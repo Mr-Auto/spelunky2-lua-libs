@@ -55,15 +55,13 @@ Use just like the functions for specific type in the API `my_menu:function(argum
  ### Explanations, features and drawbacks
 The order of operation is: create new menu object, set up the menu with desired variables, use `set_callback` to handle the logic when the players selects items from the menu, call `update_box`, `center` or `set_pos` function, make a logic that will call `draw` function when desired
 
-If you don't specify the `.items.size` the `update_box` function will need to use `draw_text_size` function to determinate the size of the "buttons", this function currently has an issue of giving garbage value when called on game load (Playlunky load lua scripts as so as the game loads)
-this mean you can't call `update_box` outside callbacks or in ON.LOAD callback, i recommend using like `ON.CAMP` and/or `ON.START` or `set_global_timeout` function in `ON.LOAD` to properly execute `update_box`. (This issue has been registered on Playlunky GitHub, hopefully it can be fixed)
+If you don't specify the `.items.size` the `update_box` function will need to use `draw_text_size` function to determinate the size of the "buttons", this function currently has an issue of giving garbage value when called on game load (Playlunky load lua scripts as soon as the game loads)
+this means you can't call `update_box` outside callbacks or in ON.LOAD callback, i recommend using like `ON.CAMP` and/or `ON.START` or `set_global_timeout` function to properly execute `update_box`. (This issue has been registered on Playlunky GitHub, hopefully it can be fixed)
 
 Because this was made with class like structure, it is possible to store the Menu object with other objects, tables etc.
 You can also expand the variables with custom ones without editing any of the `menu.lua` code, so you can have all the extra data tied to the menu itself
 
 This is single player only (obviously) and uses only the player 1 controls for the menu, it is not affected by opening a game menu, in game death etc. any of this logic needs to be made by you
-
-The draw_rect functions have a bug with the rounding argument, the fix is on the way. 
 
 ### Examples:
 
